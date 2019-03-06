@@ -1,0 +1,58 @@
+{% extends 'admin/master.html' %}
+
+
+{% block head%}
+<link rel="shortcut icon" type="image/png" href="{{ url_for('static', filename='images/favicon-32x32.png') }}"/>
+{% endblock head%}
+
+{% block body %}
+
+
+
+
+{{ super() }}
+<div class="row-fluid">
+
+    <div>
+        {% if current_user.is_authenticated %}
+            {% if current_user.has_role([1,10], attr='rank') %}
+            <h1>Anime Trivia</h1>
+            <p class="lead">
+                Administration
+            </p>
+            <p>
+                This is the administration portal for anime trivia. If you have reached this page, you have been given access to edit information in the database. You can use the same account to make changes through the API as well. In general, anything in the "Misc" tab should not be touched as they can all be edited more effectively in their parent tabs (ones not under "Misc").  Currently, user information can only be edited by master admins on this portal. To make changes to user information, you must use the API. Please use discretion when making changes.
+            </p>
+            <img src = "{{url_for('static', filename='images/kyoukai-no-kanata-ending-4-smile.gif')}}"><br><br>
+             {% else %}
+            <h1>Anime Trivia</h1>
+            <p>
+                Welcome to anime trivia. Currently there are no features for regular users. Contact an admin to be granted admin privileges.
+            </p>
+            {% endif %}
+        {% else %}
+        <form method="POST" action="">
+            {{ form.hidden_tag() if form.hidden_tag }}
+            {% for f in form if f.type != 'CSRFTokenField' %}
+            <div>
+            {{ f.label }}
+            {{ f }}
+            {% if f.errors %}
+            <ul>
+                {% for e in f.errors %}
+                <li>{{ e }}</li>
+                {% endfor %}
+            </ul>
+
+            {% endif %}
+            </div>
+            {% endfor %}
+            <button class="btn" type="submit">Submit</button>
+        </form>
+        {{ link | safe }}
+        {% endif %}
+    </div>
+
+    <a class="btn btn-primary" href="/"><i class="icon-arrow-left icon-white"></i> to index</a>
+</div>
+{% endblock body %}

@@ -1,0 +1,123 @@
+{
+showlist: [
+   {
+   id: int
+   expertise: int
+   show: {
+      id: int
+      mal_id: int
+      anilist_id: int
+      title: {
+         title: string
+         children:[
+            title: string
+         ]}
+   }}]
+}
+
+{
+   "and": [
+   {"eq": ["mal_id"]}
+   ]
+}
+
+
+Show
+
+{
+   id: int
+   mal_id: int
+   anilist_id: int
+   parent_id: int
+   titles: [{
+      id: int
+      title: string(2000)
+      title_synonyms: [{
+         id: int
+         title: string(2000)
+      }]
+   }]
+   parent: self
+   children: [self]
+}
+
+Question
+
+{
+   id: int
+   text: string(1,2000)
+   difficulty: int enum(1=easy,2=difficult,3=expert)
+   provide_hints: bool
+   answers: [{
+      id: int
+   }]
+   tags: [{
+      id: int
+   }]
+   shows: [{
+      id*: int
+   }]
+   question_links: [{
+      id: int
+      question_id: int
+      type: int enum(1=picture, 2=video)
+      url: string(1,2000)
+   }]
+   answer_links: [{
+      id: int
+      question_id: int
+      type: int enum(1=picture, 2=video)
+      url: string(1,2000)
+   }]
+}
+
+Asnwer
+{
+   id: int
+   parent_id: int
+   text: string(1,2000)
+   children: [self]
+}
+
+Question Tag
+{
+   id: int
+   type: int enum(1=category)
+   name: string(1,2000)
+}
+
+
+ShowList
+{
+   username: string
+   source: int enum(1=anilist, 2=mal)
+}
+{
+   showlist: [{
+      id: int
+      show_id: int
+      expertise: int enum(1=easy, 2=difficult, 3=expert)
+      show:{
+         ( equivalent of "/show/<show_id>" GET method )
+      }
+   }]
+}
+
+[
+   {
+      id: int
+      source: int enum(1=anilist, 2=mal)
+      username: string
+      last_edited: 
+   }
+]
+
+
+TODO:
+check update of userlists
+make sure there are no duplicate answers
+batch userlist get (post)
+update admin
+error logger
+deploy
+search function
