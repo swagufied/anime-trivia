@@ -125,9 +125,11 @@ class UserView(ModelView):
 		else:
 			raise validators.ValidationError('You are not authorized to make these changes')
 	
-	def on_model_delete(model):
+	def on_model_delete(self, model):
+		# db.session.rollback()
+		# print(model)
 		if current_user.is_authenticated and current_user.has_role(1, attr='rank'):
-			super().on_model_delete(model)
+			pass
 		else:
 			raise validators.ValidationError('You are not authorized to make these changes')
 
@@ -145,7 +147,7 @@ class RoleView(ModelView):
 		else:
 			raise validators.ValidationError('You are not authorized to make these changes')
 	
-	def on_model_delete(model):
+	def on_model_delete(self, model):
 		if current_user.is_authenticated and current_user.has_role(1, attr='rank'):
 			super().on_model_delete(model)
 		else:
@@ -238,9 +240,9 @@ class ShowView(ModelView):
 		else:
 			raise validators.ValidationError('You are not authorized to make these changes')
 	
-	def on_model_delete(model):
+	def on_model_delete(self, model):
 		if current_user.is_authenticated and current_user.has_role([1,10], attr='rank'):
-			super().on_model_delete(model)
+			pass
 		else:
 			raise validators.ValidationError('You are not authorized to make these changes')
 
@@ -366,7 +368,7 @@ class QuestionView(ModelView):
 		else:
 			raise validators.ValidationError('You are not authorized to make these changes')
 	
-	def on_model_delete(model):
+	def on_model_delete(self, model):
 		if current_user.is_authenticated and current_user.has_role([1,10], attr='rank'):
 			super().on_model_delete(model)
 		else:
@@ -431,7 +433,7 @@ class AnswerView(ModelView):
 		else:
 			raise validators.ValidationError('You are not authorized to make these changes')
 
-	def on_model_delete(model):
+	def on_model_delete(self, model):
 		if current_user.is_authenticated and current_user.has_role([1,10], attr='rank'):
 			super().on_model_delete(model)
 		else:
@@ -502,7 +504,7 @@ class QuestionTagView(ModelView):
 		else:
 			raise validators.ValidationError('You are not authorized to make these changes')
 	
-	def on_model_delete(model):
+	def on_model_delete(self, model):
 		# if end date before start date or end date in the past, flag them invalid
 		if current_user.is_authenticated and current_user.has_role([1,10], attr='rank'):
 			super().on_model_delete(model)
@@ -527,9 +529,29 @@ class AdminView(ModelView):
 		else:
 			raise validators.ValidationError('You are not authorized to make these changes')
 	
-	def on_model_delete(model):
+	def on_model_delete(self, model):
 		# if end date before start date or end date in the past, flag them invalid
 		if current_user.is_authenticated and current_user.has_role([1,10], attr='rank'):
+			super().on_model_delete(model)
+		else:
+			raise validators.ValidationError('You are not authorized to make these changes')
+
+class MasterAdminView(ModelView):
+	def is_accessible(self):
+		if current_user.is_authenticated:
+			return current_user.has_role([1], attr='rank')
+
+
+	def on_model_change(self, form, model, is_created):
+		# if end date before start date or end date in the past, flag them invalid
+		if current_user.is_authenticated and current_user.has_role([1], attr='rank'):
+			super().on_model_change(form, model, is_created)
+		else:
+			raise validators.ValidationError('You are not authorized to make these changes')
+	
+	def on_model_delete(self, model):
+		# if end date before start date or end date in the past, flag them invalid
+		if current_user.is_authenticated and current_user.has_role([1], attr='rank'):
 			super().on_model_delete(model)
 		else:
 			raise validators.ValidationError('You are not authorized to make these changes')
@@ -555,3 +577,6 @@ class UserShowView(AdminView):
 
 class UserlistView(AdminView):
 	column_filters = ['user', 'source', 'username', 'last_edited']
+
+class UserRoleView(MasterAdminView):
+	column_filters = ['role.name', 'role.rank', 'user.username']

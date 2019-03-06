@@ -137,6 +137,7 @@ with warnings.catch_warnings():
 	# User
 	admin.add_view(UserView(User, db.session, category="User"))
 	admin.add_view(RoleView(Role, db.session, category="User"))
+	# admin.add_view(UserRoleView(user_role, db.session, category="User"))
 	
 
 	# show

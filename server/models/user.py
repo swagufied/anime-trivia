@@ -37,7 +37,7 @@ class User(db.Model, UserMultiCRUD, Authorization):
 	shows = association_proxy('user_shows', 'show')
 	userlists = db.relationship('Userlist', backref='user')
 
-	roles_static = db.relationship('Role', secondary=user_role, backref=db.backref('user_static'))
+	roles_static = db.relationship('Role', secondary=user_role, viewonly=True, backref=db.backref('user_static'))
 
 	_immutable_columns = ['username', 'id']
 

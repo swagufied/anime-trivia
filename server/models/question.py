@@ -45,8 +45,8 @@ class Question(db.Model, QuestionMultiCRUD):
 	shows = db.relationship('Show', secondary=show_question, backref=db.backref('question', lazy='dynamic'), lazy='dynamic' )
 
 
-	answers_static = db.relationship('Answer', secondary=question_answer, backref=db.backref('question_static'))
-	tags_static = db.relationship('QuestionTag', secondary=question_tag, backref=db.backref('question_static'))
+	answers_static = db.relationship('Answer', secondary=question_answer, viewonly=True, backref=db.backref('question_static'))
+	tags_static = db.relationship('QuestionTag', secondary=question_tag, viewonly=True, backref=db.backref('question_static'))
 
 	def __repr__(self):
 		return self.text
