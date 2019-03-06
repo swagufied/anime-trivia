@@ -247,8 +247,9 @@ class ShowView(ModelView):
 
 class QuestionView(ModelView):
 	column_list = ['id', 'text', 'tags_static', 'answers_static']
-	column_filters = ['difficulty', 'shows.titles']
+	column_filters = ['difficulty', 'shows.titles', 'shows.mal_id', 'shows.anilist_id','answers.text', 'tags_static.name']
 	column_labels = {'tags_static': 'tags', 'answers_static': 'answers', 'text': 'Text (question)'}
+	column_searchable_list = ['text', 'answers.text', 'tags_static.name']
 
 	type_choices = {
 		'type': [
