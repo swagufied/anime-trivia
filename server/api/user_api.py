@@ -46,7 +46,8 @@ def read(user_id):
 	else:
 		if 'password' in result:
 			del result['password']
-
+		if 'email' in result:
+			del result['email']
 		if not 'errors' in result:
 			result = {'user':result}
    

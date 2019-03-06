@@ -39,7 +39,11 @@ class DevelopmentConfig(Config):
 	SQLALCHEMY_TRACK_MODIFICATIONS = False
 	SECRET_KEY = 'secret'
 
-
+class ProductionUpdateConfig(Config):
+	SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL')
+	DEBUG=True
+	SQLALCHEMY_TRACK_MODIFICATIONS = False
+	SECRET_KEY = 'secret'
 
 
 class TestingConfig(Config):
@@ -53,6 +57,7 @@ class TestingConfig(Config):
 config_by_name = dict(
 	dev=DevelopmentConfig,
 	test=TestingConfig,
-	prod=ProductionConfig
+	prod=ProductionConfig,
+	produpdate=ProductionUpdateConfig
 )
 
