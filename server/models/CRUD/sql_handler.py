@@ -55,16 +55,14 @@ class SQLHandler:
 						a = getattr(table, filter_dict[k][0])
 						b = filter_dict[k][1]
 					else:
-						print('Column "{}" doesnt exist in table "{}"'.format(filter_dict[k][0], table.__tablename__))
-						sys.exit()
+						raise Exception('Column "{}" doesnt exist in table "{}"'.format(filter_dict[k][0], table.__tablename__))
 
 				elif isinstance(filter_dict[k], str): # {operator: col_name}
 					if filter_dict[k] in table.__table__.columns: # should be value
 						a = getattr(table, filter_dict[k])
 						b = values[filter_dict[k]]
 					else:
-						print('Column "{}" doesnt exist in table "{}"'.format(filter_dict[k], table.__tablename__))
-						sys.exit()
+						raise Exception('Column "{}" doesnt exist in table "{}"'.format(filter_dict[k], table.__tablename__))
 				else:
 					print('Invalid value for operator: {}'.format(filter_dict[k]))
 					sys.exit()

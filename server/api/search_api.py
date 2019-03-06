@@ -4,11 +4,11 @@ mod = Blueprint('search_api', __name__)
 
 
 
-@mod.route('/<params>', methods=['GET'])
-def search(params):
-    print('in search')
-    print(params)
-    return jsonify({'s':'s'})
+# @mod.route('/<params>', methods=['GET'])
+# def search(params):
+#     print('in search')
+#     print(params)
+#     return jsonify({'s':'s'})
 
 # from server.methods.general_utils.string_cleanup import remove_articles, remove_punctuation
 # from sqlalchemy import and_, or_

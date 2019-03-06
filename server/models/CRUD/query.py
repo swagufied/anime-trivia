@@ -62,7 +62,7 @@ class Query:
 
 		page = parameters.get('page') or 1
 		ipp = parameters.get('items_per_page') or app.config['ITEMS_PER_PAGE']
-		print('ipp', ipp)
+
 		paginate_query = query.paginate(page, ipp, False) 
 		return paginate_query.items
 

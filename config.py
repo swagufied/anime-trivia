@@ -16,11 +16,11 @@ BASEDIR = os.path.abspath(os.path.dirname(__file__))
 # SQLALCHEMY_TRACK_MODIFICATIONS = False
 
 class Config:
-	SECRET_KEY = 'secret'
+	# SECRET_KEY = 'secret'
 	# SECRET_KEY = os.urandom(32)
 
 	SECURITY_PASSWORD_HASH = 'pbkdf2_sha512'
-	SECURITY_PASSWORD_SALT = 'qwerty'
+	SECURITY_PASSWORD_SALT = os.urandom(32)
 	ITEMS_PER_PAGE = 100
 	BASEDIR = os.path.abspath(os.path.dirname(__file__))
 	ACCESS_TOKEN_DURATION = 30 # min
@@ -37,6 +37,7 @@ class DevelopmentConfig(Config):
 	SQLALCHEMY_DATABASE_URI = 'postgres://postgres:2dover3d@localhost/jeopardy_trivia'
 	DEBUG = True
 	SQLALCHEMY_TRACK_MODIFICATIONS = False
+	SECRET_KEY = 'secret'
 
 
 

@@ -3,7 +3,6 @@ import random
 import time
 import json
 import sys
-from bs4 import BeautifulSoup
 
 
 api_url_base = "https://api.jikan.me/"
@@ -11,19 +10,6 @@ api_url_base = "https://api.jikan.me/"
 MAX_TRIES = 3
 MIN_SLEEP = 1
 
-
-#input username of user list you want to get
-#returns beautiful soup of the user's anime list.
-def request_userlist(username, api_url):
-
-	# api_url = "http://myanimelist.net/malappinfo.php?u={}&status=all&type=anime".format(username)
-	
-	response = make_request(api_url)
-
-	if response.status_code == 200:
-		return BeautifulSoup(response.content.decode('utf-8'), 'html.parser')
-	else:
-		return None
 
 # makes request to jikan api. input id and type of info you're looking for
 def request_api(api_url):
@@ -77,7 +63,7 @@ def make_request(api_url):
 	#make initial request
 	sleep_time = MIN_SLEEP
 	print('requesting: {}'.format(api_url))
-	time.sleep(sleep_time)
+	# time.sleep(sleep_time)
 	response = requests.get(api_url)
 
 	tries = 0

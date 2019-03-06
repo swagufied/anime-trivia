@@ -14,7 +14,6 @@ class ShowMultiCRUD:
 	def create(self, format_output=True, handle_parent=False, **kwargs):
 		schema = ShowSchema()
 		validated_schema = schema.load(kwargs)
-		print('passing data')
 		return self.update(show_id = None, format_output=format_output, **kwargs)
 	
 	@classmethod
@@ -52,7 +51,6 @@ class ShowMultiCRUD:
 
 		check_conflict=True
 		if not validated_schema.get('mal_id') and not validated_schema.get('anilist_id'):
-			print('sdsd')
 			check_conflict=False
 
 		# update show

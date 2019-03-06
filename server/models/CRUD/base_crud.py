@@ -88,8 +88,6 @@ class BaseCRUD(CRUDHelpers):
 	def create(self, conflict_check={}, edit_primary=False, check_conflict=True,  **values):
 		values = self.filter_column_values(edit_primary=edit_primary,**values)
 
-		print('conflicts', conflict_check)
-
 		# check for possible conflicts, especially in unique columns
 		if check_conflict:
 			tuple_conflict_check, conflict_check = self.conflict_check_clean(conflict_check, **values)
@@ -156,7 +154,6 @@ class BaseCRUD(CRUDHelpers):
 		if not row:
 			raise MissingError(tablename=self._table.__tablename__, data=row_id)
 
-		print('conflicts', conflict_check)
 		#make sure none of the updating values conflict
 		if check_conflicts:
 			if not conflict_check:
@@ -184,7 +181,6 @@ class BaseCRUD(CRUDHelpers):
 						{'ne': [self.primary_key(), row_id]}
 						]
 					}
-				print('sdsd', conflict_check)
 				tuple_conflict_check, conflict_check = self.conflict_check_clean(conflict_check)
 				self.conflict_check_method(tuple_conflict_check, conflict_check=conflict_check, **values) 
 			# print('conflict check',conflict_check)

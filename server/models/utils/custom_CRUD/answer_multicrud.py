@@ -46,8 +46,6 @@ class AnswerMultiCRUD:
 		schema = AnswerSchema(partial=True)
 		validated_schema = schema.load(kwargs)
 
-		print('schema', validated_schema)
-
 		conflict_check = {
 			'and':[
 			{'eq': ['text', validated_schema['text']]},
@@ -58,7 +56,6 @@ class AnswerMultiCRUD:
 		# update answer
 		answer_row = None
 		if answer_id:
-			print('updating')
 			answer_row = row_update_helper('Answer', answer_id, conflict_check=conflict_check, **validated_schema)
 		else:
 			answer_row = row_create_helper('Answer', conflict_check=conflict_check, **validated_schema)

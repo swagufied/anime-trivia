@@ -53,7 +53,7 @@ class UserMultiCRUD:
 				}}
 
 		return_obj = {}
-		return_obj['access_token'] = generate_access_token(user['id'])
+		return_obj['access_token'] = generate_access_token(user['id']).decode('utf-8')
 
 		return return_obj
 
@@ -101,7 +101,7 @@ class UserMultiCRUD:
 			db.session.rollback()
 			raise e
 
-		tprint('User create', schema.dump(user_row))
+		print('User create', schema.dump(user_row))
 
 		return {'msg': 'User was successfully registered.'}
 	
@@ -152,7 +152,6 @@ class UserMultiCRUD:
 		# hash password
 		if 'password' in validated_schema:
 			validated_schema['password'] = sha256_crypt.hash(validated_schema['password'])
-			# print('pass', validated_schema['password'])
 
 		# create the category
 		try:
@@ -185,7 +184,7 @@ class UserMultiCRUD:
 			db.session.rollback()
 			raise e
 
-		tprint('User create', schema.dump(user_row))
+		print('User update', schema.dump(user_row))
 
 		return {'msg': 'User was successfully updated.'}
 
@@ -199,6 +198,8 @@ class UserMultiCRUD:
 		except Exception as e:
 			db.session.rollback()
 			raise e
+
+		print('User delete', user_id)
 
 		return {'msg': 'User was successfully deleted.'}
 

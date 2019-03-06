@@ -47,7 +47,7 @@ def tiered_parent_helper(table, child_list, parent=None, child_attr="children", 
 	child_ids = []
 	if parent:
 		child_ids = [child.id for child in getattr(parent, child_attr)]
-	print(child_ids)
+	# print(child_ids)
 	child_rows = []
 	for child in child_list:
 

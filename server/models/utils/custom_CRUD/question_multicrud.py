@@ -31,7 +31,7 @@ class QuestionMultiCRUD:
 		db.session.rollback()
 		schema = QuestionSchema(partial=True)
 		validated_schema = schema.load(kwargs)
-		print('schema',validated_schema)
+
 		#create question
 		question_row = None
 		if question_id:
@@ -62,7 +62,7 @@ class QuestionMultiCRUD:
 					link_row = row_create_helper('QuestionLink', **link)
 
 			for link_id in link_ids:
-				print('retrive', retrieve_row('QuestionLink', link_id))
+				# print('retrive', retrieve_row('QuestionLink', link_id))
 				row_delete_helper('QuestionLink', link_id)
 
 		# update tags
@@ -169,7 +169,7 @@ class QuestionTagMultiCRUD:
 		schema = QuestionTagSchema()
 		validated_schema = schema.load(kwargs)
 		
-		print('schema', validated_schema)
+		# print('schema', validated_schema)
 		# create tag
 
 

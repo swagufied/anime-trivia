@@ -12,8 +12,6 @@ mod = Blueprint('user_api', __name__)
 @mod.route('/login', methods=['POST'])
 def login():
 	data = request.get_json()
-	# print(data)
-	# print(type(data))
 	result = User.login(**data)
 	return jsonify(result)
 

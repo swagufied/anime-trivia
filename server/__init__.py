@@ -34,7 +34,7 @@ from config import config_by_name
 
 
 app = Flask(__name__)
-app.config.from_object(config_by_name['dev'])
+app.config.from_object(config_by_name['prod'])
 db = SQLAlchemy(app)
 # admin = Admin(app)
 CORS(app)
@@ -80,44 +80,8 @@ from server.models.user import User, Role
 from passlib.hash import sha256_crypt
 
 
-@app.before_first_request
-def initialize_master_admin():
-	print('goping through init process')
-	master_admin = User.query.filter_by(username='master_admin').first()
-	if not master_admin:
-		print('no master admin')
-		master_admin = User(username='master_admin', email = 'master_admin@gmail.com', password=sha256_crypt.hash('master admin'))
-		db.session.add(master_admin)
+@app.errorhandler(Exception)
+def all_exception_handler(error):
+	print(error)
+	return 'Something went wrong...', 500
 
-	master_admin_role = Role.query.filter_by(name='master admin').first()
-	if not master_admin_role:
-		master_admin_role = Role(name='master admin', rank=1)
-		db.session.add(master_admin_role)
-
-	print('dsfgjegoierogireigo')
-	admin = User.query.filter_by(username='admin').first()
-	if not admin:
-		admin = User(username='admin', email='admin@gmail.com', password=sha256_crypt.hash('admin admin'))
-		db.session.add(admin)	
-
-	admin_role = Role.query.filter_by(name='admin').first()
-	if not admin_role:
-		admin_role = Role(name='admin', rank=10)
-		db.session.add(admin_role)
-
-	try:
-		db.session.flush()
-	except Exception as e:
-		db.session.rollback()
-		raise e
-	print('finish initial')
-	master_admin = User.query.filter_by(username='master_admin').first()
-	admin = User.query.filter_by(username='admin').first()
-
-	try:
-		master_admin.add_role(master_admin_role)
-		admin.add_role(admin_role)
-		db.session.commit()
-	except Exception as e:
-		db.session.rollback()
-		raise e

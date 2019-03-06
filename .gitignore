@@ -1,8 +1,8 @@
 # Byte-compiled / optimized / DLL files
-db_create.py
-db_destroy.py
+initialize_db.py
 tests/
 test_app.py
+server/test.db
 test.db
 
 __pycache__/

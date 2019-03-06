@@ -92,7 +92,7 @@ class UserView(ModelView):
 		if current_user.is_authenticated and current_user.has_role(1, attr='rank'):
 			# set formdata to dicts
 			data = form.data
-			print(data)
+			# print(data)
 			roles = []
 			for role in data['roles']:
 				roles.append({'id': role.id})
@@ -195,7 +195,7 @@ class ShowView(ModelView):
 		if current_user.is_authenticated and current_user.has_role([1,10], attr='rank'):
 			# set formdata to dicts
 			data = form.data
-			print(data)
+			# print(data)
 			children = []
 			for child in data['children']:
 				children.append({'id': child.id})
@@ -471,7 +471,7 @@ class QuestionTagView(ModelView):
 		if current_user.is_authenticated and current_user.has_role([1,10], attr='rank'):
 
 			data = form.data
-			print(data)
+			# print(data)
 			model_id = None
 			if not is_created:
 				model_id = model.id
