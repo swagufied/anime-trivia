@@ -34,8 +34,8 @@ class Show(db.Model, ShowMultiCRUD):
 
 	def __repr__(self):
 		if not self.parent_id:
-			return "<Show {} (parent)> - {}".format(self.id, self.titles[0])
-		return "<Show {} ({})> - {}".format(self.id, self.mal_id, self.titles[0])
+			return "{} - {}".format(self.id, self.titles[0])
+		return "{} - {} ({})".format(self.id, self.titles[0], self.parent.titles[0])
 
 
 

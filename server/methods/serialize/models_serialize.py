@@ -34,7 +34,7 @@ class ShowSchema(Schema):
 	parent_id  = fields.Integer(validate=PositiveInt('Invalid ID.'), allow_none=True)
 	titles     = fields.Nested(ShowTitleSchema, many=True, missing=[], default=[])
 	parent     = fields.Nested('self', exclude=['parent', 'children'], missing={}, dump_only=True)
-	children   = fields.Nested('self', many=True, exclude=['parent'], missing=[], default=[], dump_only=True)
+	children   = fields.Nested('self', many=True, exclude=['parent'], missing=[], default=[])
 
 	@pre_load
 	def validation_check(schema, in_data):

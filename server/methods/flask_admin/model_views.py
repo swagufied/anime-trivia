@@ -155,7 +155,7 @@ class RoleView(ModelView):
 
 
 class ShowView(ModelView):
-	column_list = ['id', 'mal_id', 'anilist_id', 'titles']
+	column_list = ['id', 'mal_id', 'anilist_id', 'titles', 'children']
 
 	column_filters = ['mal_id', 'anilist_id', 'titles']
 	column_searchable_list = ['titles.title']
@@ -196,6 +196,7 @@ class ShowView(ModelView):
 			# set formdata to dicts
 			data = form.data
 			# print(data)
+			# print('children',data['children'])
 			children = []
 			for child in data['children']:
 				children.append({'id': child.id})
@@ -211,12 +212,12 @@ class ShowView(ModelView):
 			data['titles'] = titles
 			
 			if 'parent' in data and data['parent']:
-				data['parent'] = {'id': data['parent'].id}
+				data['parent_id'] = data['parent'].id
 
 			model_id = None
 			if not is_created:
 				model_id = model.id
-
+			# print(data)
 			try:
 				result = Show.update(show_id=model_id, **data)
 			except CRUDError as e:

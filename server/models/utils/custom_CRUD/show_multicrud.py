@@ -53,6 +53,8 @@ class ShowMultiCRUD:
 		if not validated_schema.get('mal_id') and not validated_schema.get('anilist_id'):
 			check_conflict=False
 
+		# print('schema', validated_schema)
+
 		# update show
 		show_row = None
 		if show_id:
@@ -62,6 +64,18 @@ class ShowMultiCRUD:
 
 		# update parent
 
+
+		# update children
+		if 'children' in validated_schema:
+			child_ids = [child.id for child in show_row.children]
+			for child in validated_schema['children']:
+				child['parent_id'] = show_row.id
+				child_row = row_update_helper('Show', child['id'], **child)
+				if child_row.id in child_ids:
+					del child_ids[child_ids.index(child_row.id)]
+
+			for child_id in child_ids:
+				row_update_helper('Show', child_id, **{'parent_id':None})
 
 		# manage titles
 		if 'titles' in validated_schema:
